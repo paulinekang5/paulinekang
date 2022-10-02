@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tank</title>
+	<link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+
+	<style type="text/css">
+		.output0{
+			font-family: 'Secular One', sans-serif;
+			font-size: 20px;
+			border:none;
+			background-color: #C5F3B1;
+		}
+		h3{
+			font-family: 'Secular One', sans-serif;
+		}	
+		body{
+			background-color: #C5F3B1
+		}
+		.button{
+			border: none;
+			font-family: 'Secular One', sans-serif;
+			font-size: 20px;
+			background-color: #257C00;
+			color: white;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+	</style>
+<script type="text/javascript">
+	var points = 0
+
+	// HEALTH BARS
+	barX = 125;
+	barXE = 150;
+	barY = 20;
+
+	// MOVING THE USER'S TANK
+	var arrow = 4; // 1- up, 2- right, 3 - down, 4- left
+	var bodyX = 225;
+	var bodyY = 215;
+	var circleX = 250;
+	var circleY = 250;
+	var pipeX = 244;
+	var pipeY = 210;
+
+	// BULLETS
+	var bulletNum = 0;
+	var Bullet = new Array();
+	var moveX = 0;
+	var moveY = 0;
+	var bulletX = 0 * 1;
+	var bulletY = 0 * 1;
+	//var Bullet = new Array();
+
+	// TIMER
+	var onOff = 0 * 1;
+	var offOn = 0 * 1;
+
+	var moveDirY = 0;
+	var moveDirX = 0;
+
+
+
+
+	// GEMS
+	redGemX = Math.floor(Math.random()*600)+5;
+	redGemY = Math.floor(Math.random()*400)+5;
+
+	greenGemX = Math.floor(Math.random()*600)+5;
+	greenGemY = Math.floor(Math.random()*400)+5;
+
+
+	// AI VARIABLES
+	var Tanks = new Array();
+	var arrowAI = 4 // 1- up, 2- right, 3 - down, 4- left
+
+	function init(){
+		window.addEventListener('keydown', doKeyDown, true);
+		drawTank();
+	}
+
+	function bulletInfo(moveX, moveY, bulletX, bulletY){
+		this.moveX = moveX;
+		this.moveY = moveY;
+		this.bulletX = bulletX;
+		this.bulletY = bulletY;
+	}
+
+	// FUNCTION TO FIRE BULLET
+	function FireBullet(){
+		if (bulletNum < 4){
+
+			if (arrow == 1){ // up
+				moveY = -10
+			}
+			if (arrow == 3){ // down
+				moveY = 10
+			}
+			if (arrow == 4){ // left
+				moveX = -10
+			}
+			if (arrow == 2){ // right
+				moveX = 10
+			}
+			bulletNum += 1;
+		}
+
+		bulletX += moveX
+		bulletY += moveY
+
+		// ADJUST THESE VALUES! ****
+		for (var a = 0; a < Tanks.length; a++){
+			if (Math.abs(bulletX - Tanks[a].bodyXAI) < 40 && Math.abs(bulletY - Tanks[a].bodyYAI) < 40){
+				console.log("HIT")
+				StartTimer();
+				moveX = 0
+				moveY = 0
+				bulletX = bodyX;
+				bulletY = bodyY;
+				bulletNum -= 1;
+				points += 1;
+				barXE -= 10;
+				if (barXE <= 0){
+					clearInterval(aiTimer);
+					window.alert("You Won! :-)" + "\nRefresh the page to start again.")
+				}
+				if (Tanks[a].hit == 2){
+					Tanks[a].bodyXAI = 600;
+					Tanks[a].bodyYAI = 600;
+					Tanks[a].pipeYAI = 600;
+					Tanks[a].pipeYAI = 600;
+					Tanks[a].vel = 0;
+				}
+				else{
+					Tanks[a].hit += 1
+				}
+				document.TankPoints.points.value = points;
+			}
+		}
+		if (bulletY < 0 || bulletY > 390 || bulletX > 650|| bulletX < 0){
+			StartTimer();
+			moveX = 0
+			moveY = 0
+			bulletX = circleX;
+			bulletY = circleY;
+			bulletNum -= 1;
+		}
+		drawTank();
+	}
+
+	// DEFINING PROPERTIES FOR AI TANK
+	function tankInfo(bodyXAI, bodyYAI, pipeXAI, pipeYAI, hit, vel, arrowAI){
+		this.bodyXAI = bodyXAI;
+		this.bodyYAI = bodyYAI;
+		this.pipeXAI = pipeXAI;
+		this.pipeYAI = pipeYAI;
+		this.hit = hit;
+		this.vel = vel;
+		this.arrowAI = arrowAI;
+	}
+
+	// FILL AI TANK ARRAY
+	for (var i = 0; i < 5; i++){
+		bodyXAI = Math.floor(Math.random()*600)+5;
+		bodyYAI = Math.floor(Math.random()*400)+5;
+		circleXAI = bodyXAI + 25;
+		circleYAI = bodyYAI + 35;
+		pipeXAI = bodyXAI + 20;
+		pipeYAI = bodyYAI - 5;
+		hit = 0;
+		vel = Math.floor(Math.random()*2.75)+.75;
+		arrowAI = 1;
+		Tanks[i] = new tankInfo(bodyXAI, bodyYAI, pipeXAI, pipeYAI, hit, vel)
+	}
+
+	function drawTank(LeftRight){
+		// paints to the canvas
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+
+		ctx.canvas.width = 600;
+		ctx.canvas.height = 480;
+
+		ctx.fillStyle = "#AE7900";
+		ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+		ctx.fill();
+		
+		// bullet
+		if (onOff == 1){
+			ctx.fillStyle="#000000";
+			ctx.beginPath();
+			ctx.arc(bulletX, bulletY ,5 ,0 ,Math.PI*2 ,true);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		// draw tank
+			// LEFT
+		if (arrow == 4){
+			ctx.fillStyle = "#006320";
+			ctx.fillRect(bodyX , bodyY ,45, 45); 
+			ctx.fill()
+			window.addEventListener('keydown', Move, true);
+
+			ctx.fillStyle = "#006320";
+			window.addEventListener('keydown', Move, true);
+			ctx.fillRect(pipeX-30, pipeY+20 ,55, 15); 
+			ctx.fill()
+			window.addEventListener('keydown', Move, true);
+
+		}
+		// UP
+		else if (arrow == 1){
+			ctx.fillStyle = "#006320";
+			ctx.fillRect(bodyX, bodyY ,45, 45); 
+			ctx.fill();
+			window.addEventListener('keydown', Move, true);
+
+			ctx.fillStyle = "#006320";
+			window.addEventListener('keydown', Move, true);
+			ctx.fillRect(pipeX-3, pipeY-5 ,15, 55); 
+			ctx.fill();
+			window.addEventListener('keydown', Move, true);
+		}
+		// RIGHT
+		else if (arrow == 2){
+			ctx.fillStyle = "#006320";
+			ctx.fillRect(bodyX, bodyY ,45, 45); 
+			ctx.fill();
+			window.addEventListener('keydown', Move, true);
+
+			ctx.fillStyle = "#006320";
+			window.addEventListener('keydown', Move, true);
+			ctx.fillRect(pipeX-10, pipeY+21 ,55, 15); 
+			ctx.fill();
+			window.addEventListener('keydown', Move, true);
+		}
+		
+		// DOWN
+		else if (arrow == 3){
+			ctx.fillStyle = "#006320";
+			ctx.fillRect(bodyX, bodyY ,45, 45); 
+			ctx.fill()
+			window.addEventListener('keydown', Move, true);
+
+			ctx.fillStyle = "#006320";
+			window.addEventListener('keydown', Move, true);
+			ctx.fillRect(pipeX-3, pipeY+6 ,15, 55); 
+			ctx.fill();
+			window.addEventListener('keydown', Move, true);
+		}
+
+		// HEALTH BAR
+			ctx.fillStyle = "#004D13";
+			ctx.fillRect(10, 455, barX, barY); 
+			ctx.fill()
+
+			ctx.fillStyle = "#CE3204";
+			ctx.fillRect(200, 455, barXE, barY); 
+			ctx.fill()
+
+
+		// draw AI
+			// LEFT
+		var c = document.getElementById("myCanvas");
+			for(var k = 0; k < Tanks.length; k++){
+				ctx.fillStyle = "#E54036";
+				ctx.fillRect(Tanks[k].bodyXAI , Tanks[k].bodyYAI ,45, 45); 
+				ctx.fill()
+				window.addEventListener('keydown', Move, true);
+
+				ctx.fillStyle = "#E54036";
+				window.addEventListener('keydown', Move, true);
+				if (Tanks[k].arrowAI == 4){ // right
+					ctx.fillRect(Tanks[k].pipeXAI-50, Tanks[k].pipeYAI+20 ,50, 15); 
+				}
+				else if (Tanks[k].arrowAI == 2){ // left
+					ctx.fillRect(Tanks[k].pipeXAI+10, Tanks[k].pipeYAI+20 ,50, 15); 
+				}
+				ctx.fill()
+				window.addEventListener('keydown', Move, true);
+			}
+
+
+		// DRAWING GEMS
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.fillStyle = "#FF2D6D";
+		ctx.fillRect(redGemX , redGemY  ,10, 10); 
+		ctx.fill()
+		//console.log("red")
+
+		ctx.fillStyle = "#00CF4B";
+		ctx.fillRect(greenGemX , greenGemY ,10, 10); 
+		ctx.fill()
+		//console.log("green")
+
+		//console.log("x: " + Math.abs(bodyX - redGemX))
+		//console.log("y: " + Math.abs(bodyY - redGemY))
+		//console.log("gemx: " + redGemX)
+		//console.log("gemy: " + redGemY)
+		//console.log("tankx: " + bodyX)
+		//console.log("tanky: " + bodyY)
+		//console.log("---------")
+
+		if(Math.abs(bodyX - redGemX) < 25 && Math.abs(bodyY - redGemY) < 25){
+			points -= 10;
+			document.TankPoints.points.value = points;
+			redGemX = Math.floor(Math.random()*600)+5;
+			redGemY = Math.floor(Math.random()*400)+5;
+
+		}
+		if(Math.abs(bodyX - greenGemX) < 25 && Math.abs(bodyY - greenGemY) < 25){
+			points += 10;
+			document.TankPoints.points.value = points;
+			greenGemX = Math.floor(Math.random()*600)+5;
+			greenGemY = Math.floor(Math.random()*400)+5;
+		}
+
+		if (bodyX > 20 && bodyX < 625){
+			bodyX += moveDirX;
+			pipeX += moveDirX;
+		}
+		else{
+			bodyX += 0;
+			pipeX += 0;
+		}
+
+		if  (bodyY > 10 && bodyY < 390){
+			bodyY += moveDirY;
+			pipeY += moveDirY;
+		}
+		else{
+			bodyY += 0;
+			pipeY += 0;
+		}
+	}
+
+	function Move(){
+		window.addEventListener('keydown', doKeyDown, true);
+		drawTank();
+
+	}
+
+	function doKeyDown(evt){
+		switch(evt.which)
+		{
+			case 37: //left arrow
+				if (bodyX > 10){
+					moveDirX = -1;
+					moveDirY = 0;
+					arrow = 4;
+					//bodyX -= 5;
+					//circleX -= 5;
+					//pipeX -= 5;
+				}
+			break;
+			
+			case 38: //up arrow
+				if (bodyY > 10){
+					arrow = 1;
+					moveDirX = 0;
+					moveDirY = -1;
+
+					//bodyY -= 5;
+					//circleY -= 5;
+					//pipeY -= 5;
+				}
+			break;
+ 			
+			case 39: // right arrow
+				if (bodyX < 625){
+					arrow = 2;
+					moveDirX = 1;
+					moveDirY = 0;
+					//bodyX += 5;
+					//circleX += 5;
+					//pipeX += 5;
+				}
+			break;
+
+			case 40: //down arrow
+				if (bodyY < 390){
+					arrow = 3;
+					moveDirX = 0;
+					moveDirY = 1;
+					//bodyY += 5;
+					//circleY += 5;
+					//pipeY += 5;
+				}
+			break;
+
+			case 32: // shoot
+				if(onOff == 0){
+					StartTimer();
+				}
+			break; 
+		}
+
+		if (onOff == 0){
+			bulletX = bodyX;
+			bulletY = bodyY;
+		}	
+		drawTank();
+	}
+
+	function Track(){
+		// if AI to the right
+		for(var t = 0; t < Tanks.length; t++){
+			if (Tanks[t].bodyXAI < bodyX){
+				Tanks[t].arrowAI = 2;
+				Tanks[t].bodyXAI += Tanks[t].vel;
+				Tanks[t].circleXAI += Tanks[t].vel;
+				Tanks[t].pipeXAI += Tanks[t].vel;
+			}
+			else if (Tanks[t].bodyXAI > bodyX){
+				Tanks[t].arrowAI = 4;
+				Tanks[t].bodyXAI -= Tanks[t].vel;
+				Tanks[t].circleXAI -= Tanks[t].vel;
+				Tanks[t].pipeXAI -= Tanks[t].vel;
+			}
+
+			if (Tanks[t].bodyYAI < bodyY){
+				//arrowAI = 3;
+				Tanks[t].bodyYAI += Tanks[t].vel;
+				Tanks[t].circleYAI += Tanks[t].vel;
+				Tanks[t].pipeYAI += Tanks[t].vel;
+			}
+			else if (Tanks[t].bodyYAI > bodyY){
+				//arrowAI = 1;
+				Tanks[t].bodyYAI -= Tanks[t].vel;
+				Tanks[t].circleYAI -= Tanks[t].vel;
+				Tanks[t].pipeYAI -= Tanks[t].vel;
+			}
+
+			if (Math.abs(bodyX - Tanks[t].bodyXAI) < 60 && Math.abs(bodyY - Tanks[t].bodyYAI) < 50){
+				barX -= 3;
+				if (barX < 0){
+					clearInterval(aiTimer);
+					window.alert("You lost! :-(" + "\nRefresh the page to start again.")
+				}
+			}
+			//console.log(Tanks[t].arrowAI);
+			drawTank();
+		}		
+	}
+
+
+	function TimerAI(){
+		if(offOn == 0){
+			// creates timer variable
+			aiTimer = setInterval("Track()", 100);
+			offOn = 1 * 1;
+		}
+		else if(offOn == 1){
+			clearInterval(aiTimer);
+			offOn = 0 * 1;
+		}
+	}
+
+	function StartTimer(){
+		if(onOff == 0){
+			// creates timer variable
+			timer = setInterval("FireBullet()", 100);
+			onOff = 1 * 1;
+		}
+		else if(onOff == 1){
+			clearInterval(timer);
+			onOff = 0 * 1;
+		}
+	}
+</script>
+
+</head>
+<body onload="init()"> 
+	<center>
+	</br>
+		<img style="width:400px" src="tankTitle.png">
+		</br>
+		</br>
+		<canvas id="myCanvas" width="600" height="300" style="border:1px solid rgb(195, 195, 195);">
+			Your browser does not support canvas element
+		</canvas>
+		</br>
+		</br> 
+		<table>
+			<tr id="points">
+				<th  id="points"><h3>Points: </h3></th>
+				<th  id="points"> 		
+					<form name="TankPoints">
+						<textarea name="points" class="output0" id="outputFieldA" rows="1" cols="5"/></textarea>
+					</form>
+				</th>
+			</tr>
+		</table>
+		<input type="button" class = "button" name="btnPress" value="PLAY/PAUSE"
+		onclick="TimerAI()"/>
+	</center>
+</body>
+</html>

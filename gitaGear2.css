@@ -1,0 +1,48 @@
+body, html{
+	background-color: #FFEB7C;
+}
+
+th, td {
+    padding-left: 40px;
+     padding-top: 5px;
+     padding-bottom: 2px;
+}
+
+.text{
+	font-family: 'Balsamiq Sans', cursive;
+	font-size: 30px;
+}
+
+.order{
+	font-family: 'Balsamiq Sans', cursive;
+	font-size: 20px;
+	padding: 20px;
+}
+
+.left{
+	float:left;
+	margin-left: 250px;
+}
+
+.button{
+	border: none;
+	font-family: 'Balsamiq Sans', cursive;
+	font-size: 20px;
+	background-color: #008B06;
+	color: white;
+	padding: 15px 32px;
+	cursor: pointer;
+}
+
+.info{
+	font-family: 'Balsamiq Sans', cursive;
+	font-size: 20px;
+}
+
+.output{
+	font-family: 'Balsamiq Sans', cursive;
+	font-size: 20px;
+	background-color: #CDFF89;
+	border: none;
+}
+

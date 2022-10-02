@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Dice Game</title>
+	<link href="dice.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+	<script type="text/javascript">
+		var totalRolls = 0;
+		// first index = 2 ... last index = 12
+		var sums = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+		function roll(){
+			// ROLLING
+			var random0 = Math.floor(Math.random()*6)+1;
+			var random1 = Math.floor(Math.random()*6)+1;
+			console.log(random1);
+			console.log(random0);
+
+			if (random0 == 1){
+				document.getElementById("dice0").src="dice1.png";
+			}
+			else if (random0 == 2){
+				document.getElementById("dice0").src="dice2.png";
+			}
+			else if (random0 == 3){
+				document.getElementById("dice0").src="dice3.png";
+			}
+			else if (random0 == 4){
+				document.getElementById("dice0").src="dice4.png";
+			}
+			else if (random0 == 5){
+				document.getElementById("dice0").src="dice5.png";
+			}
+			else if (random0 == 6){
+				document.getElementById("dice0").src="dice6.png";
+			}
+
+			if (random1 == 1){
+				document.getElementById("dice1").src="dice1.png";
+			}
+			else if (random1 == 2){
+				document.getElementById("dice1").src="dice2.png";
+			}
+			else if (random1 == 3){
+				document.getElementById("dice1").src="dice3.png";
+			}
+			else if (random1 == 4){
+				document.getElementById("dice1").src="dice4.png";
+			}
+			else if (random1 == 5){
+				document.getElementById("dice1").src="dice5.png";
+			}
+			else if (random1 == 6){
+				document.getElementById("dice1").src="dice6.png";
+			}
+
+			// SUM + PROBABILITY
+			totalRolls += 1;
+			var sum = random0 + random1;
+			sums[sum-2] += 1;
+			document.OutputFormA.sum.value = (sum);
+
+			document.OutputForm0.prob2.value = (sums[0]/totalRolls);
+			document.OutputForm1.prob3.value = (sums[1]/totalRolls);
+			document.OutputForm2.prob4.value = (sums[2]/totalRolls);
+			document.OutputForm3.prob5.value = (sums[3]/totalRolls);
+			document.OutputForm4.prob6.value = (sums[4]/totalRolls);
+			document.OutputForm5.prob7.value = (sums[5]/totalRolls);
+			document.OutputForm6.prob8.value = (sums[6]/totalRolls);
+			document.OutputForm7.prob9.value = (sums[7]/totalRolls);
+			document.OutputForm8.prob10.value = (sums[8]/totalRolls);
+			document.OutputForm9.prob11.value = (sums[9]/totalRolls);
+			document.OutputForm10.prob12.value = (sums[10]/totalRolls);
+
+			document.OutputFormB.sum2.value = sums[0];
+			document.OutputFormC.sum3.value = sums[1];
+			document.OutputFormD.sum4.value = sums[2];
+			document.OutputFormE.sum5.value = sums[3];
+			document.OutputFormF.sum6.value = sums[4];
+			document.OutputFormG.sum7.value = sums[5];
+			document.OutputFormH.sum8.value = sums[6];
+			document.OutputFormI.sum9.value = sums[7];
+			document.OutputFormJ.sum10.value = sums[8];
+			document.OutputFormK.sum11.value = sums[9];
+			document.OutputFormL.sum12.value = sums[10];
+			document.OutputFormM.total.value = totalRolls;
+		}
+		
+	</script>
+</head>
+<body>
+	<center>
+		</br>
+		<img style = "width: 600px"src="diceTitle.png">
+	</center>
+	<center>
+		<div style="float:left; margin-left: 40px">
+		</br>
+		<img style="margin:20px" src="dice1.png" id="dice0">
+		<img style="margin:20px" src="dice1.png" id="dice1">
+		</br>
+		<table>
+			<tr id="sum">
+				<th  id="sum"><h4>Sum: </h4></th>
+				<th  id="sum"> 		
+					<form name="OutputFormA">
+						<textarea name="sum" class="output0" id="outputFieldA" rows="1" cols="5"/></textarea>
+					</form>
+				</th>
+			</tr>
+		
+		</table>
+
+		</br>
+		<h3>Total Rolls of Sum</h3>
+		<table>
+			<tr>
+				<th>= 2</th>
+				<th>= 3</th>
+				<th>= 4</th>
+				<th>= 5</th>
+				<th>= 6</th>
+				<th>= 7</th>
+				<th>= 8</th>
+				<th>= 9</th>
+				<th>= 10</th>
+				<th>= 11</th>
+				<th>= 12</th>
+				<th>Total</th>
+			</tr>
+			<tr>
+				<th> 
+					<form name="OutputFormB">
+						<textarea name="sum2" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormC">
+						<textarea name="sum3" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormD">
+						<textarea name="sum4" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormE">
+						<textarea name="sum5" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormF">
+						<textarea name="sum6" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormG">
+						<textarea name="sum7" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormH">
+						<textarea name="sum8" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormI">
+						<textarea name="sum9" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormJ">
+						<textarea name="sum10" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormK">
+						<textarea name="sum11" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormL">
+						<textarea name="sum12" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+				<th> 
+					<form name="OutputFormM">
+						<textarea name="total" class="outputA" id="outputField" rows="1" cols="1"/></textarea>
+					</form> 
+				</th>
+			</tr>
+		</table>
+			
+		</br>
+		<input class="btn" type="button" value="Roll" onclick="roll()">
+		</br></br>
+	</div>
+	<h2>Probablity of Rolling...</h2>
+		<table>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 2</span></th>
+				<th> 
+					<form name="OutputForm0">
+						<textarea name="prob2" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 3</span></th>
+				<th> 
+					<form name="OutputForm1">
+						<textarea name="prob3" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 4</span></th>
+				<th> 
+					<form name="OutputForm2">
+						<textarea name="prob4" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 5</span></th>
+				<th> 
+					<form name="OutputForm3">
+						<textarea name="prob5" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 6</span></th>
+				<th> 
+					<form name="OutputForm4">
+						<textarea name="prob6" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 7</span></th>
+				<th> 
+					<form name="OutputForm5">
+						<textarea name="prob7" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 8</span></th>
+				<th> 
+					<form name="OutputForm6">
+						<textarea name="prob8" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 9</span></th>
+				<th> 
+					<form name="OutputForm7">
+						<textarea name="prob9" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 10</span></th>
+				<th> 
+					<form name="OutputForm8">
+						<textarea name="prob10" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 11</span></th>
+				<th> 
+					<form name="OutputForm9">
+						<textarea name="prob11" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+			<tr>
+				<th>Probability of Rolling a <span style="color:#297CE5">Sum of 12</span></th>
+				<th> 
+					<form name="OutputForm10">
+						<textarea name="prob12" class="output" id="outputField" rows="1" cols="5"/></textarea>
+					</form> 
+				</th>
+			</tr>
+		</table>	
+	</center>
+
+</body>
+</html>

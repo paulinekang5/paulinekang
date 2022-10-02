@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Array List</title>
+
+	<style type="text/css">
+		html, body{
+			background-color: #BBD6AE;
+		}
+	</style>
+	<script type="text/javascript">
+		
+		function runArray(){
+		var arr = []
+		var largest = -1;
+		var current = 0;
+		var smallest = 101;
+		var total = 0;
+		var avg = 0;
+		var orderArr = []
+		var evenArr = []
+
+			for (x = 0; x< 100; x++){
+				// array w random numbers
+				current = Math.floor(Math.random()*(100-1+1))+1;
+				arr.push(current)
+				orderArr.push(current)
+				// find the largest number
+				if(current > largest){
+					largest = current;
+				}
+				// finding the smallest number
+				if(current < smallest){
+					smallest = current;
+				}
+				// average
+				total += current;
+				if (x == 99){
+					avg = total/100;
+				}
+			}
+
+			// descending array
+			orderArr.sort(function(a, b){return b-a});
+			console.log(orderArr);
+
+			// remove odd
+			for (y = 0; y< 100; y++){
+				if(arr[y]%2 ==0){
+					evenArr.push(arr[y])
+				}
+			}
+			console.log(evenArr);
+
+			document.OutputForm.txaoutputField.value = "Random Array: " + arr + 
+														"\n" + 
+														"\n" + "Greatest Number: " + largest + 
+														"\n" + 
+														"\n" + "Smallest Number: " + smallest + 
+														"\n" + 
+														"\n" + "Average: " + avg + 
+														"\n" + 
+														"\n" + "Highest to Lowest: " + orderArr + 
+														"\n" + 
+														"\n" + "Evens Only: " + evenArr;
+		}
+		
+
+	</script>
+</head>
+<body>
+
+	<center>
+		</br>
+		<img style="width: 500px" src="arrayTitle.png">
+		</br></br></br>
+		<form name="OutputForm">
+			<textarea name="txaoutputField" class="output" id="outputField" rows="25" cols="64"/>Hello!
+Click "Generate" to make an array with random numbers!
+			</textarea>
+		</form>
+
+		<input type="button" class = "button" name="btnPress" value="Generate"
+		onclick="runArray()"/>
+		</div>	
+	</center>
+
+</body>
+</html>

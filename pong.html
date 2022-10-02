@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pong</title>
+
+	<style type="text/css">
+		html, body{
+			background-color: #74B8C8;
+		}
+
+		.button
+		{
+			border: none;
+			font-size: 20px;
+			background-color: #0051C3;
+			color: white;
+			padding: 15px 32px;
+			cursor: pointer;
+		}
+	</style>
+
+	<script type="text/javascript">
+		// circle variables
+		var xCoordCir = 250 * 1;
+		var yCoordCir = 200 * 1;
+
+		var AIWin = 0 * 1;
+		var userWin = 0 * 1;
+
+		var moveCircleX = 10 * 1;
+		var moveCircleY = 10 * 1;
+		var ranX = Math.floor(Math.random()*2)+1;
+		var ranY = Math.floor(Math.random()*2)+1;
+		console.log(ranX, ranY);
+		if (ranY == 1){
+			moveCircleY = -10 * 1;
+		}
+		if (ranX == 1){
+			moveCircleX = -10 * 1;
+		}
+
+
+		// AI paddle variables
+		var xCoordAI = 200 * 1;
+		var moveAIX = 2 * 1;
+
+		// user controlled paddle variable
+		var xCoordCont = 200 * 1;
+
+		// timer varibales
+		var onOff = 0 * 1;
+
+		function playPong(){
+			// canvas
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+
+			ctx.canvas.width = 500;
+			ctx.canvas.height = 500;
+
+			ctx.fillStyle = "#E2E2E2";
+			ctx.fillRect(0, 0, window.innerWidth, window.innerHeight); 
+
+			// circle
+			ctx.fillStyle = "#FF9B23";
+			ctx.beginPath();
+			ctx.arc(xCoordCir, yCoordCir, 15, 0, Math.PI* 2, true);
+			ctx.closePath();
+			ctx.fill();
+
+			// top paddle (AI)
+			ctx.fillStyle = "#74A7C8";
+			ctx.fillRect(xCoordAI, 50, 150, 35); 
+
+			// bottom paddle (controlled by player)
+			ctx.fillStyle = "#9396D2";
+			ctx.fillRect(xCoordCont, 425, 150, 35); 
+			window.addEventListener('keydown', MoveUser, true);
+		}
+
+		function Move(){
+			// moving ball
+			xCoordCir += moveCircleX;
+			yCoordCir += moveCircleY;
+
+			if(xCoordCir >= 475 || xCoordCir <= 10){
+				moveCircleX *= -1;
+			}
+
+			// moving AI paddle
+			xCoordAI += moveAIX;
+			if (xCoordCir >= xCoordAI + 75){
+				if (xCoordAI > 340){
+					moveAIX = 0 * 1;
+				}
+				else{
+					moveAIX = 10 * 1;
+				}
+			}
+			else if (xCoordCir < xCoordAI + 75){
+				if (xCoordAI < 15){
+					moveAIX = 0 * 1;
+				}
+				else{
+					moveAIX = -10 * 1;
+				}
+			}
+
+			// controlling the bottom paddle is its own function: MoveUser
+
+			// if hit paddles change x direction
+			// bottom paddle
+			if(xCoordCir > xCoordCont-3 && xCoordCir < xCoordCont + 150 && yCoordCir > 400 && yCoordCir < 430){
+				moveCircleY *= -1.05;
+			} 			
+
+			// top paddle
+			if(xCoordCir > xCoordAI-3 && xCoordCir < xCoordAI + 155 && yCoordCir > 90 && yCoordCir < 110){
+				moveCircleY *= -1.05;
+			} 
+
+			// winner
+			if (yCoordCir < 5){
+				userWin += 1;
+				window.alert("You won!" + "\nSCORE:" + "\nUSER: " + 
+					userWin + " and AI: " + AIWin)
+				clearInterval(timer);
+				restart();
+			}
+			if (yCoordCir > 500){
+				AIWin += 1
+				window.alert("AI won!" + "\nSCORE:" + "\nUSER: " + 
+					userWin + " and AI: " + AIWin)
+				clearInterval(timer);
+				restart();
+			}
+
+			playPong();
+		}
+
+		function restart(){
+			xCoordCir = 250 * 1;
+			yCoordCir = 200 * 1;
+
+			moveCircleX = 10 * 1;
+			moveCircleY = 10 * 1;
+
+			xCoordAI = 200 * 1;
+		 	moveAIX = 2 * 1;
+
+		 	xCoordCont = 200 * 1;
+			xCoordAI = 200 * 1;
+
+			moveCircleX = 10 * 1;
+			moveCircleY = 10 * 1;
+			ranX = Math.floor(Math.random()*2)+1;
+			ranY = Math.floor(Math.random()*2)+1;
+			console.log(ranX, ranY);
+			if (ranY == 1){
+				moveCircleY = -10 * 1;
+			}
+			if (ranX == 1){
+				moveCircleX = -10 * 1;
+			}
+
+			onOff =0;
+		 	playPong();
+		}
+
+		function MoveUser(evt){
+			switch(evt.which)
+			{
+				//left arrow
+				case 37:
+				
+				xCoordCont -= 10;
+				break;
+				
+				//right arrow
+				case 39:
+				
+				xCoordCont += 10;
+				break;
+			}
+		}
+
+		function StartTimer(){
+			if(onOff == 0){
+				// creates timer variable
+				timer = setInterval("Move()", 100);
+				onOff = 1 * 1;
+			}
+			else if(onOff == 1){
+				clearInterval(timer);
+				onOff = 0 * 1;
+			}
+		}
+
+	</script>
+</head>
+<body onload="playPong()">
+	<center>
+		</br>
+		<img style="width: 350px" src="pongTitle.png">
+		</br>
+		</br>
+		<!-- canvas -->
+		<canvas id="myCanvas" width="500" height="150" style="border:1px solid rgb(195, 195, 195);">
+			Your browser does not support canvas element
+		</canvas>
+
+		</br>
+
+		<input type="button" class = "button" name="Play" value="Play Pong!" onclick="StartTimer()"/>
+	</center>
+
+</body>
+</html>

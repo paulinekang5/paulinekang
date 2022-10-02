@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Helicopter Game</title>
+	<style type="text/css">
+		html, body{
+			background-color: #AAAAAA;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+	// CURRENT TASK:
+	// splice when bird leaves canvas 
+
+		var direction = 3; // 1 - up ; 2 - right; 3 - left
+
+		var bodyX = 290;
+		var bodyY = 15;
+		var counter = 0
+
+		var onOff = 0 * 1;
+		var fly = 0 * 1;
+		var make = 0 * 1;
+
+		var barX = 70;
+		var barY = 10;
+		var moveBarX = bodyX - 10;
+		var moveBarY = bodyY - 25;
+
+		var moveX = 0;
+		var moveY = 0;
+
+		var points = 0;
+ // BIRDS
+		var Birds = new Array();
+		var birdX = 0;
+		var birdY = 0;
+		var birdVel = 0
+
+		function birdInfo(x, y, velx){
+			this.x = x;
+			this.y = y;
+			this.velx = velx;
+		}
+
+		function makeBirds(){
+			xCoord = 600;
+			yCoord = Math.floor(Math.random()*350)+5;
+			xVel = Math.floor(Math.random()*13)+5;
+			Birds.push(new birdInfo(xCoord, yCoord, xVel));
+			counter += 1;
+		}
+
+		function flyBird(){
+			for(var b = 0; b < counter; b++){
+				if (Birds[b].x > 0){
+					Birds[b].x -= Birds[b].velx;
+
+					// collision code
+					if(Birds[b].x < bodyX + 45 && Birds[b].x + 7 > bodyX && Birds[b].y < bodyY + 40 && Birds[b].y + 7 > bodyY){
+						Birds.splice(b, 1);
+						counter -= 1;
+						barX -= 4;
+					}
+				}
+				else{
+					Birds.splice(b, 1);
+					counter -= 1;
+				}
+			}
+		}
+
+		function init(){
+			drawHelicopter();
+			StartTimer();
+			makeTimer();
+			window.addEventListener('keydown', doKeyDown, true);
+		}
+
+
+		function drawHelicopter(){
+			// paints to the canvas
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.canvas.width = 600;
+			ctx.canvas.height = 400;
+			ctx.fillStyle = "#BFD8F5";
+			ctx.fillRect(0, 0, window.innerWidth, window.innerHeight); 
+
+
+			// drawing health bar
+			ctx.fillStyle = "#8EC72F";
+			ctx.fillRect(moveBarX, moveBarY, barX, barY); 
+			ctx.fill()
+
+			// draw helicopter
+			// LEFT
+			if (direction == 3){ 
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fillRect(bodyX , bodyY , 45, 30); 
+				ctx.fillRect(bodyX +15, bodyY+ 7 , 50, 10); 
+				ctx.fillRect(bodyX + 60, bodyY -4, 5, 30)
+				ctx.fillRect(bodyX + 20, bodyY -6, 5, 20)
+				ctx.fillRect(bodyX-10 , bodyY-10 , 70, 5); 
+				ctx.fill()
+			}
+			// RIGHT
+			if (direction == 2 ){
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fillRect(bodyX , bodyY , 45, 30); 
+				ctx.fillRect(bodyX -15, bodyY + 7 , 50, 10);
+				ctx.fillRect(bodyX - 20, bodyY -4, 5, 30) 
+				ctx.fillRect(bodyX + 20, bodyY -6, 5, 20)
+				ctx.fillRect(bodyX-13, bodyY-10 , 70, 5); 
+				ctx.fill()
+			}
+
+			// points
+			ctx.font = "20px Courier New";
+			ctx.fillText("Points: " + points, 8, 20);
+
+			// extra visual details
+				// grass/ground
+			ctx.fillStyle = "#1C7B00";
+			ctx.fillRect(0 , 375 , 600, 30); 
+			ctx.fill();
+				//sun
+			ctx.fillStyle = "#FFEC72";
+			ctx.beginPath();
+			ctx.arc(150, 70, 35, 0 , Math.PI*2, true);
+			ctx.closePath();
+			ctx.fill();
+		
+
+			// drawing birds
+			for(var k = 0; k < Birds.length; k++){
+				ctx.fillStyle = "#000000";
+				ctx.beginPath();
+				ctx.arc(Birds[k].x, Birds[k].y, 7, 0 , Math.PI*2, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+			
+		}
+
+		// GRAVITY FUNCTION
+		function Fall(){
+			if(bodyY > 345 || barX <= 0){
+				clearInterval(timer1);
+				clearInterval(timer2);
+				clearInterval(timer3);
+				window.alert("You lost! :-(" + "\nYou got " + points + " points!" + "\nRefresh the page & Press OK to play again!");
+			}
+			else{
+				bodyY += 2;
+				moveBarY += 2;
+				drawHelicopter();
+			}
+		}
+
+		function flyTime(){
+			if(barX > 0){
+				points += 1;
+			}
+		}
+
+		function makeTimer(){
+			if (make == 0){
+				timer1 = setInterval("makeBirds()", 900);
+				timer2 = setInterval("flyBird()", 100);
+				timer3 = setInterval("flyTime()", 1000);
+				fly = 1 * 1;
+			}
+			else if (make == 1){
+				clearInterval(timer1);
+				fly = 0 * 1;
+			}
+		}
+
+		// KEYPRESS
+		function doKeyDown(evt){
+			switch(evt.which)
+			{
+				case 37: //left arrow
+					direction = 3;
+					if (bodyX > 10){
+						bodyX += -2;
+						moveBarX += -2;
+					}
+					
+				break;
+				
+				case 38: //up arrow
+					if(bodyY > 10){
+						bodyY += -5
+						moveBarY -=5;
+					}
+				break;
+	 			
+				case 39: // right arrow
+					direction = 2
+					if (bodyX < 540){
+						bodyX += 2;
+						moveBarX += 2;
+					}
+
+				break;
+			}
+			drawHelicopter();
+		}
+
+		function StartTimer(){
+		if(onOff == 0){
+			// creates timer variable
+			timer = setInterval("Fall()", 100);
+			onOff = 1 * 1;
+		}
+		else if(onOff == 1){
+			clearInterval(timer);
+			onOff = 0 * 1;
+		}
+	}
+		
+	</script>
+
+</head>
+<body onload="init()">
+	<center>
+		<!--Title-->
+		<img style = "width: 500px " src = "helicopter.png">
+		</br>
+		</br>
+		<!--Canvas -->
+		<canvas id="myCanvas" width="600" height="400" style="border:1px solid rgb(195, 195, 195);">
+			Your browser does not support canvas element
+		</canvas>
+		</br>
+		<!--Button-->
+		<input type="button" class = "button" name="btnPress" value="PLAY/PAUSE" onclick="StartTimer()"/>
+
+	</center>
+	
+
+</body>
+</html>

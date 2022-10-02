@@ -1,0 +1,39 @@
+html, body{
+	background-color: #2EB11A;
+}
+
+div{
+	background-color: white;
+}
+
+.btn{
+	background-color: #009627;
+	border:none;
+	color: white;
+	cursor: pointer;
+	font-size: 30px;
+	margin-left: 240px;
+	margin-bottom: 30px;
+	font-family: 'Abril Fatface', cursive;
+}
+
+.output0{
+	font-family: 'Abril Fatface', cursive;
+	border:none;
+	font-size: 20px;
+	align-content: center;
+	margin-left:250px;
+	float:left;
+}
+
+h3{
+	font-family: 'Abril Fatface', cursive;
+	margin-left:250px;
+}
+.output1{
+	font-family: 'Abril Fatface', cursive;
+	font-size: 20px;
+	border:none;
+
+
+}

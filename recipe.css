@@ -1,0 +1,37 @@
+html, body{
+	background-color: #FFF7F2;
+}
+
+.title{
+	font-family: 'Shrikhand', cursive;
+	color: #FFD92F;
+}
+
+.caption{
+	font-family: 'Shrikhand', cursive;
+	color: #FF8A2F;
+}
+
+.header{
+	font-family: 'Shrikhand', cursive;
+	color: #FFD92F;
+	margin-left: 30px;
+	margin-bottom: 0px;
+}
+
+.ingredients{
+	font-family: 'Baloo Tammudu 2', cursive;
+	color: #FF6E2F;
+	margin: -10px;
+}
+
+.info{
+	font-family: 'Baloo Tammudu 2', cursive;
+	color: black;
+	font-size: 20px;
+	width: 700px;
+}
+
+.list{
+	width: 400px;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Virtual Reality </title>
+		<!--₊˚.༄*:･ﾟ✧*:･ﾟ✧-->
+		<!-- stylesheets -->
+		<link href="techPage.css" rel="stylesheet" media="all">
+		<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+
+		<script type="text/javascript">
+			function changeLink(color0){
+				document.getElementById(color0).style.color = "pink";
+				document.getElementById(color0).style.textDecoration="none"
+			}
+
+			function changeBack(color1){
+				document.getElementById(color1).style.color = "#89D6CE";
+				document.getElementById(color1).style.textDecoration="underline"
+			}
+
+			function changePic(pic0){
+				document.getElementById(pic0).src = "vrCartoon.jpg";
+			}
+			function changePicBack(pic1){
+				document.getElementById(pic1).src = "oculus.jpeg";
+			}
+
+			function changeText(text0){
+				document.getElementById(text0).style.color = "#89D6AB";
+			}
+			function changeTextBack(text1){
+				document.getElementById(text1).style.color = "#5594CA";
+			}
+	</script>
+
+	</head>
+	<body>
+
+		<!-- title and gif -->
+		<center>
+			<img style="height: 135px; padding: 15px" src="vrTitle.png">
+			</br>
+			
+			<div style="background-color: #DFF0FF; padding: 5px;"> 
+				<a href="https://dribbble.com/shots/7411829-Virtual-Reality-Man"><img style="height: 450px" src ="vrMan.gif"></a>
+			</div>
+		</center>
+
+		<!-- paragraphs -->
+		<center>
+	
+			<div style="width:750px">
+				<h1 id = "textOne" onmouseover="changeText(this.id)" onmouseout="changeTextBack(this.id)"> What is Virtual Reality? </h1>
+					<p>
+						Virtual Reality (VR) allows is a three-demensional environment created by a computer that allows people to experience a reality that either does not exist or cannot be accessed or reached due to certain circumstances. Virtual reality can be used through headsets and omni-directional treadmills and gloves. Many people use virtual reality and augmented reality interchangeably, but they are different! (You can click the image below to read more about augmented reality!)
+					</br></br>
+						<a href="https://clevertap.com/blog/what-is-augmented-reality/"><img style="height:475px" src="vs.png"></a> 	
+					</p>
+
+				<h1 id = "textFour" onmouseover="changeText(this.id)" onmouseout="changeTextBack(this.id)"> How does Virtual Reality work?</h1>
+					<p>
+						 First of all, all VR headsets have a head-tracker, so it can change the image depending on the way to turn or angle your head. This head-tracker is called 6DoF, or six degrees of freedom. It plots the X, Y, and Z of your head position. Some VR sets have more advanced components, like a gyroscope, magnetometer, and accelerometer. A gyroscope is a disk or wheel that can adjust freely about an axis. A magnetometer is an instrument used to measure magnetic force, and an accelerometer is an instrument used to measure acceleration. Virtual reality headsets also have LCD lenses. Images can be sent to either one or two of the lenses. These lenses help angle the images to make 2D look 3D.
+					</p>
+
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/NCBEYaC876A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				
+				<!--₊˚.༄*:･ﾟ✧*:･ﾟ✧-->
+				<h1 id = "textTwo" onmouseover="changeText(this.id)" onmouseout="changeTextBack(this.id)"> What can Virtual Reality be used for? </h1>
+					<p>
+						Virtual reality is used most in games. It allows players to be immersed into a game, making it more real life than simply looking at a screen. Doctors are also hoping and planning to use virtual reality as a way to help and cure diseases or sicknesses. At Cedars-Sinai hospital in Los Angeles, ER staff, Brennan Spiegel, put a VR set on a man who had a panic attack. The VR had a scene of the beach, and it had calmed the man down. Cedars-Sinai is one of many hospitals who are using VR to reduce pain and calm or comfort people. Spiegel hopes that with more research, people can avoid addicting pain-killers and use virtual reality to ease pain. 
+						</br></br>
+						Now with COVID-19, many things have become difficult to do in person, or if something can be done in person, there are concerns. This is where VR may play a large role. With future advancements, people hope that human "interactions" may be possible, while also safely keeping people isolated. Another big advancement may be doctor appointments without actually having go to the doctor. This would be very beneficial because it would allow the patient to be isolated, while also being able to "visit" their doctor.
+					</p>
+
+					<a href="https://giphy.com/gifs/fantoche-3o7buctdzCPP4d7ZMk"><img style="height:375px" src="space.gif"></a>
+
+				<h1 id = "textThree" onmouseover="changeText(this.id)" onmouseout="changeTextBack(this.id)"> Is Virtual Reality Safe? </h1>
+				<p>
+					Although VR offers a lot of benefits, it is still a piece of technology that is improving. Some effects it may have on people are nausea, eyestrain, migraines, and radiation exposure. The user may also experience anxiety; the person may experience shock or anxiousness because what they are seeing seems so real (for example, a war scene). Another possible drawback is when people wear the headsets, they are most likely to lose sense of their space in actual reality. This may lead to possible accidents or injuries to people and things around them. However, many of these can be prevented. If someone is more prone to be nauseous or more sensitive to lights, avoiding the use of VR until it is further advanced will be much more beneficial. Being aware of how real things will look and being fully aware of your surroundings can prevent the other possible dangers.
+				</p>
+				
+			</div>
+
+			<img id="oculus" src ="oculus.jpeg" onmouseover="changePic(this.id)" onmouseout = "changePicBack(this.id)">
+
+		</center>
+
+
+	</br></br></br>
+
+		<p>
+			Sources: 
+			<a href = "https://www.vrs.org.uk/virtual-reality/what-is-virtual-reality.html" id="linkOne" onmouseover="changeLink(this.id)" onmouseout="changeBack(this.id)"> vrs.org.uk</a>
+			<a href = "https://www.newgenapps.com/blog/how-vr-works-technology-behind-virtual-reality/#:~:text=The%20Basics%20of%20How%20VR,interaction%20with%20the%20real%20world." id="linkTwo" onmouseover="changeLink(this.id)" onmouseout="changeBack(this.id)"> newgenapps.com</a> 
+			<a href = "https://www.wareable.com/vr/how-does-vr-work-explained" id="linkThree" onmouseover="changeLink(this.id)" onmouseout="changeBack(this.id)"> wareable.com</a> 
+			<a href = "https://servreality.com/blog/how-virtual-reality-may-be-useful-during-the-covid-19-epidemic/" id="linkFour" onmouseover="changeLink(this.id)" onmouseout="changeBack(this.id)"> servreality.com</a> 
+			<a href = "https://www.vesttech.com/4-health-risks-from-using-virtual-reality-headsets/" id="linkFive" onmouseover="changeLink(this.id)" onmouseout="changeBack(this.id)"> vesttech.com</a> 
+		</p>
+		<!--₊˚.༄*:･ﾟ✧*:･ﾟ✧-->
+		<!-- bottom of page -->
+		<p>
+			pauline kang <span>✩°｡⋆⸜(ू˙꒳​˙ ) </span>
+		</p>
+	</body>
+</html>

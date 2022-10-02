@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Invader Climb</title>
+	
+	<style type="text/css">
+		html, body{
+			background-color: black;
+		}
+	</style>
+	<script type="text/javascript">
+		var moveY = -5;
+		var moveX = 5;
+
+		var xCoord = Math.floor(Math.random()*400)+1;
+		var yCoord = 450;
+
+		var onOff = 0 * 1;
+		
+		function drawCharacter(LeftRight){
+			// paints to the canvas
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+
+			ctx.canvas.width = 400;
+			ctx.canvas.height = 500;
+
+			ctx.fillStyle = "#83B1DF";
+			ctx.fillRect(0, 0, window.innerWidth, window.innerHeight); 
+
+			// draw invader
+			ctx.fillStyle = "#D9C2DA";
+			ctx.beginPath();
+			ctx.arc(xCoord, yCoord, 17, 0, Math.PI* 2, true);
+			ctx.closePath();
+			ctx.fill();
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/5, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/10, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/20, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/-5, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/-10, 0, 2 * Math.PI);
+			ctx.ellipse(xCoord, yCoord+17, 5, 25, Math.PI/-20, 0, 2 * Math.PI);
+			ctx.fill();
+
+			console.log(LeftRight)
+			if (moveX > 0){
+				ctx.fillStyle = "#000000";
+				ctx.beginPath();
+				ctx.arc(xCoord+7, yCoord-3, 2, 0, Math.PI* 2, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+			
+			if (moveX < 0){
+				ctx.fillStyle = "#000000";
+				ctx.beginPath();
+				ctx.arc(xCoord-7, yCoord-3, 2, 0, Math.PI* 2, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+
+		}
+
+
+
+		// create function to move circle
+		function Move(){
+			yCoord += moveY;
+
+			LeftRight = Math.floor(Math.random()*2)+1;
+
+			console.log(LeftRight)
+
+			if (LeftRight == 2){
+				moveX = 5;
+			}
+			else if	(LeftRight == 1){
+				moveX = -5;
+			}
+
+			xCoord += moveX;
+
+			if (yCoord < 10 ){
+				alert("You won!");
+				clearInterval(timer);
+				xCoord =  Math.floor(Math.random()*400)+1
+				yCoord = 450;
+			}
+
+			if(xCoord < 15 || xCoord > 385){
+				alert("You lost!")
+				clearInterval(timer);
+				xCoord =  Math.floor(Math.random()*400)+1;
+				yCoord = 450;
+			}
+			drawCharacter();
+		}
+
+		function StartTimer(){
+			if(onOff == 0){
+				// creates timer variable
+				timer = setInterval("Move()", 200);
+				onOff = 1 * 1;
+			}
+			else if(onOff == 1){
+				clearInterval(timer);
+				onOff = 0 * 1;
+			}
+		}
+ 
+	</script>
+</head>
+<body onload="drawCharacter()">
+	<center>
+		</br>
+		<img style = "width: 600px" src="invaderTitle.png">
+		</br>
+		</br>
+		</br>
+		</br>
+		<canvas id="myCanvas" width="600" height="300" style="border:1px solid rgb(195, 195, 195);">
+			Your browser does not support canvas element
+		</canvas>
+		</br>
+		</br>
+		<input type="button" name="Play" value="Move" onclick="Move()"/>
+		<input type="button" name="Auto" value="Animate" onclick="StartTimer()"/>
+
+	</center>
+</body>
+</html>

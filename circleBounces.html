@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Circle Bounce </title>
+	<script type="text/javascript">
+		var Circles = new Array();
+		var size = new Array();
+		var xCoord = 0 * 1;
+		var yCoord = 0 * 1;
+
+		var onOff = 0 * 1;
+
+		var xRect = 3;
+		var yRect = 3;
+		bodyX = Math.floor(Math.random()*470)+5;
+		bodyY = Math.floor(Math.random()*280)+5;
+
+		// define our properties of our circles
+		function circleInfo(x, y, velx, vely, color){
+			this.x = x;
+			this.y = y;
+			this.velx = velx;
+			this.vely = vely;
+			this.color = color;
+		}
+
+		// fill an array with the properties of our object
+		for(var i = 0; i < 45; i++){
+			xCoord = Math.floor(Math.random()*470)+5;
+			yCoord = Math.floor(Math.random()*280)+5;
+			var myColor = getRandomColor();
+
+			// RANDOM SPEEDS
+			xVel = Math.floor(Math.random()*13)+5;
+			yVel = Math.floor(Math.random()*13)+5;
+
+			Circles[i] = new circleInfo(xCoord, yCoord, xVel, yVel, myColor);
+		}
+
+		// an array to create RANDOM SIZES
+		for(var i = 0; i < 45; i++){
+			tempSize = Math.floor(Math.random()*12)+2;
+			size[i] = tempSize;
+		}
+
+		function init(){
+			drawCircle();
+		}
+
+		function moveCircles(){
+			for(var m = 0; m < Circles.length; m++){
+				if(Circles[m].x > document.getElementById("myCanvas").width-10){
+					Circles[m].velx *= -1;
+				}
+				else if(Circles[m].x < 5){
+					Circles[m].velx *= -1;
+				}
+
+				if(Circles[m].y > document.getElementById("myCanvas").height-10){
+					Circles[m].vely *= -1;
+				}
+				else if(Circles[m].y < 5){
+					Circles[m].vely *= -1;
+				}
+				
+				Circles[m].x += Circles[m].velx;
+				Circles[m].y += Circles[m].vely;
+
+				if (Math.abs( Circles[m].x  - bodyX) < 20 && Math.abs(Circles[m].y - bodyY) < 20){
+					Circles.splice(m, 1);
+				}
+			}
+
+
+			drawCircle();
+		}
+
+		function moveRect(){
+			if(bodyX > document.getElementById("myCanvas").width-15){
+				xRect *= -1;
+			}
+			else if(bodyX < 10){
+				xRect *= -1;
+			}
+			if(bodyY > document.getElementById("myCanvas").height-15){
+				yRect *= -1;
+			}
+			else if(bodyY < 10){
+				yRect *= -1;
+			}
+			bodyX += xRect;
+			bodyY += yRect;
+
+			drawRect();
+		}
+
+		function drawRect(){
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.fillStyle = "#FEFEFE";
+			ctx.fillRect(bodyX , bodyY ,25, 25); 
+			ctx.fill()
+		}
+
+		function drawCircle(){
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.canvas.width = 500;
+			ctx.canvas.height = 300;
+			ctx.fillStyle = "#000000";
+			ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+			for(var k = 0; k < Circles.length; k++){
+				ctx.fillStyle = Circles[k].color;
+				ctx.beginPath();
+				ctx.arc(Circles[k].x, Circles[k].y, size[k], 0 , Math.PI*2, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+		}
+
+		function getRandomColor() {
+
+			// creating a random number between 0 and 255
+			var r = Math.floor(Math.random()*256);
+			var g = Math.floor(Math.random()*256);
+			var b = Math.floor(Math.random()*256);
+			 
+			// going from decimal to hex
+			var hexR = r.toString(16);
+			var hexG = g.toString(16);
+			var hexB = b.toString(16);
+			 
+			// making sure single character values are prepended with a "0"
+			if (hexR.length == 1) {
+				hexR = "0" + hexR;
+			}
+			 
+			if (hexG.length == 1) {
+				hexG = "0" + hexG;
+			}
+			 
+			if (hexB.length == 1) {
+				hexB = "0" + hexB;
+			}
+		 
+		// creating the hex value by concatenatening the string values
+		var hexColor = "#" + hexR + hexG + hexB;
+			return hexColor.toUpperCase();
+		}
+
+		function StartTimer(){
+			if(onOff == 0){
+				// creates timer varaible
+				timer = setInterval("moveCircles(), moveRect()", 100);
+				onOff = 1 * 1;
+			}
+			else if(onOff == 1){
+				clearInterval(timer);
+				onOff = 0 * 1;
+			}
+		}
+
+	</script>
+
+	<style type="text/css">
+		body, html{
+			background-color: #FDEDBC;
+		}
+
+	</style>
+</head>
+<body onload = "init()">
+	<center>
+		<img style = "width: 500px" src="circleTitle.png">
+		</br>
+		</br>
+		<canvas id="myCanvas" width= "500" height="200"
+		style = "border: 1 px sold rgb(195, 195, 195);">
+		Your browser does not support the canvas element
+		</canvas>
+		</br>
+		</br>
+		<input type="button" value="Move" onclick="moveCircles(), moveRect()">
+		<input type="button" name="Auto" value="Animate" onclick="StartTimer()"/>
+
+	</center>
+
+</body>
+</html>

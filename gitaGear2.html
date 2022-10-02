@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GITA Gear</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+	<link href="gitaGear2.css" rel="stylesheet">
+
+	<script type="text/javascript">
+		var total = 0*1;
+		var orderNum = 0*1;
+		var avg = 0*1;
+		var brothers = 0*1;
+		var sisters = 0*1;
+		function calculate(name, banner, mousepad, sticker, polo, radioButtons, brother, sister){
+			var final = 0*1;
+			final = Math.round(100*((polo*15) + (mousepad*5) + (banner*12) + (sticker*1.5)))/100;
+			var original = 0*1;
+			original = final;
+			var discountOff = 0*1;
+			if(radioButtons[1].checked){
+				discountOff = final * 0.1;
+				final = final * 0.9;
+			}
+			else if(radioButtons[2].checked){
+				discountOff = final * 0.15
+				final = final * 0.85;
+			}
+			
+			if(brother.checked){
+				brothers += 1;
+			}
+			if(sister.checked){
+				sisters += 1;
+			}
+	
+			total += final;
+			orderNum += 1;
+			avg = Math.round(100*((total)/orderNum))/100;
+
+			//output answer to text area
+			document.OutputForm.txaoutputField.value = "Hi " + name + "!" +
+												"\n" + " " +
+												"\n" + "Original Cost:  $" + original +
+												"\n" + "Discounted Amount:  $" + discountOff +
+			 									"\n" + "Discounted Cost:  $" + final +
+			 									"\n" + " " +
+			 									"\n" + "Brothers in GITA: " + brothers +
+			 									"\n" + "Sisters in GITA: " + sisters +
+			 									"\n" + " " +
+			 									"\n" + "Manager Stats:" +
+												"\n" + "Total Expenditures: $" + total +
+												"\n" + "Average of All Orders: $" + avg +
+												"\n" + " " +
+												"\n" + "Thank you for shopping with us!";
+
+		}
+	
+	</script>
+</head>
+<body>
+	<center><img style="width: 300px" src="gitaGear.png"></center>
+	</br>
+
+ 	<!--TABLE -->
+	<center>
+		<table>
+			<tr>
+				<th class="text">banner: $12.00</th>
+				<th class="text">mouse pad: $5.00</th>
+				<th class="text">sticker: $1.50</th>
+				<th class="text">polo shirt: $15.00</th>
+			</tr>
+			<tr>
+				<th><img style = "width:300px"src= "banner.png"></th>
+				<th><img style = "width:200px" src="mousepad.png"></th>
+				<th><img style = "width:300px" src="sticker.png"></th>
+				<th><img style = "width:300px" src="poloshirt.png"></th>
+			</tr>
+			<tr>
+		</table>
+		
+	<!--FORM -->
+	<div class="left">
+		<form name ="orders" class="order">
+			Name: <input type="text" class="info" name="txtName" value=""/>
+			</br></br>
+			# of Banners: <input type="text" class="info" name="txtBanner" value =""/>
+			</br></br>
+			# of Mousepads: <input type="text" class="info" name="txtMousepads" value =""/>
+			</br></br>
+			# of Stickers: <input type="text" class="info" name="txtStickers" value =""/>
+			</br></br>
+			# of Polo Shirts: <input type="text" class="info" name="txtPoloShirts" value =""/>
+			</br>
+			</br>
+			<input type="radio" name="radioBG" value="noDiscount">No Discount
+			</br>
+			</br>
+			<input type="radio" name="radioBG" value="sophJr">10% off (Soph. or Junior)
+			</br>
+			</br>
+			<input type="radio" name="radioBG" value="senior">15% off (Senior)
+			</br>
+			</br>
+			<input type="checkbox" id="Brother" name="chkBrother"
+			value = "Brother"/>Brother in GITA
+			<input type="checkbox" id="Sister" name="chkSister"
+			value = "Sister"/>Sister in GITA
+			</br>
+			</br>
+
+			<input type="button" class = "button" name="btnPress" value="Calculate"
+		onclick="calculate(orders.txtName.value, orders.txtBanner.value, orders.txtMousepads.value, orders.txtStickers.value, orders.txtPoloShirts.value,orders.radioBG, orders.chkBrother, orders.chkSister)"/>
+		</br>
+
+		</form>
+
+		
+			</br>
+		</div>	
+
+		<form name="OutputForm">
+			<textarea name="txaoutputField" class="output" id="outputField" rows="10" cols="60"/>Hello!
+Welcome to the GITA GEAR Merchandise store! Please enter you name and how many you would like of each item!
+			</textarea>
+		</form>
+	</center>
+</body>
+</html>

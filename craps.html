@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Craps Game</title>
+	<link href="craps.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+	<script type="text/javascript">
+		rollNum = 0;
+		var point = 0;
+		// ROLLING THE DICE
+		function roll(){
+			var random0 = Math.floor(Math.random()*6)+1;
+			var random1 = Math.floor(Math.random()*6)+1;
+			console.log(random1);
+			console.log(random0);
+
+			if (random0 == 1){
+				document.getElementById("dice0").src="dice1.png";
+			}
+			else if (random0 == 2){
+				document.getElementById("dice0").src="dice2.png";
+			}
+			else if (random0 == 3){
+				document.getElementById("dice0").src="dice3.png";
+			}
+			else if (random0 == 4){
+				document.getElementById("dice0").src="dice4.png";
+			}
+			else if (random0 == 5){
+				document.getElementById("dice0").src="dice5.png";
+			}
+			else if (random0 == 6){
+				document.getElementById("dice0").src="dice6.jpg";
+			}
+
+			if (random1 == 1){
+				document.getElementById("dice1").src="dice1.png";
+			}
+			else if (random1 == 2){
+				document.getElementById("dice1").src="dice2.png";
+			}
+			else if (random1 == 3){
+				document.getElementById("dice1").src="dice3.png";
+			}
+			else if (random1 == 4){
+				document.getElementById("dice1").src="dice4.png";
+			}
+			else if (random1 == 5){
+				document.getElementById("dice1").src="dice5.png";
+			}
+			else if (random1 == 6){
+				document.getElementById("dice1").src="dice6.jpg";
+			}
+
+			// SUM + PROBABILITY
+			rollNum += 1;
+			document.OutputFormC.rollNum.value = "# of Rolls: " + rollNum;
+			var sum = random0 + random1;
+			document.OutputFormA.sum.value = (sum);
+
+			if (rollNum == 1){
+				if (sum == 11 || sum == 7){
+					document.OutputFormB.results.value = "You Won!";
+					rollNum = 0;
+				}
+				else if (sum == 2 || sum == 3 || sum == 12){
+					document.OutputFormB.results.value = "You Lost!";
+					rollNum = 0;
+				}
+				else{
+					point = sum;
+					document.OutputFormB.results.value = "Point: " + point;
+
+				}
+			}
+			else{
+				if(sum == point){
+					document.OutputFormB.results.value = "You Won!";
+					rollNum = 0;
+				}
+				else if(sum == 7){
+					document.OutputFormB.results.value = "You Lost!";
+					rollNum = 0;
+				}
+			}
+
+			
+			
+
+		}
+	</script>
+</head>
+<body>
+	</br>
+	<center><img style="width: 600px" src="crapsTitle.png"></center>
+
+	</br>
+	<div style="float:left; margin-left: 40px">
+		<img style="margin:20px; float:left;" src="dice1.png" id="dice0">
+		<img style="margin:20px; float:left;" src="dice1.png" id="dice1">
+		
+		<h3>Sum:</h3>
+		<form name="OutputFormA">
+			<textarea name="sum" class="output0" id="outputFieldA" rows="1" cols="5"/></textarea>
+		</form>
+		<input class="btn" type="button" value="Roll" onclick="roll()">
+		<center>
+		<form name="OutputFormB">
+			<textarea name="results" class="output1" id="outputFieldB" rows="1" cols="10"/></textarea>
+		</form>
+
+		<form name="OutputFormC">
+			<textarea name="rollNum" class="output1" id="outputFieldC" rows="1" cols="10"/></textarea>
+		</form>
+		</center>
+		
+	</div>
+	
+	<div>
+		<img style="width: 700px; margin-left:20px; float:left;" src="craps.png">
+	</div>
+
+	
+
+
+
+</body>
+</html>
